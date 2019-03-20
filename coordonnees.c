@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "coordonnees.h"
+#include "tout.h"
 
 extern
 t_coord * creer_coord(int absi, int ord){
@@ -7,6 +7,7 @@ t_coord * creer_coord(int absi, int ord){
   pt = malloc(sizeof(t_coord));
   pt->absi = absi;
   pt->ord = ord;
+  return pt;
 }
 
 static

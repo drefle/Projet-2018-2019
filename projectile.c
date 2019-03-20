@@ -1,12 +1,13 @@
 
 #include "tout.h"
 
-#define N 48
+#define N 46
 #define M 26
 #define L 12
 
-
 #define PROJECTILE 8
+
+extern int nb_mob_tot;
 
 static
 void supprimer_projectile(t_projectile * p){
@@ -61,7 +62,7 @@ void deplacer_projectile(t_salle * salle, t_joueur * j,int i){ // Déplace et ve
       p->x += p->mouv_x;
       p->y += p->mouv_y;
     }
-    
+
     if( salle->m_salle[p->x][p->y] !=0 ){ // Vérifie si le projectile touche qqchose
       if( salle->m_salle[p->x][p->y] == 1){ // Joueur touché
         j->pv--;
@@ -75,6 +76,10 @@ void deplacer_projectile(t_salle * salle, t_joueur * j,int i){ // Déplace et ve
           if(p->x == m->x_salle && p->y == m->y_salle){
             salle->m_salle[m->x_salle][m->y_salle]=0;
             oter_elt(l_monstre);
+            nb_mob_tot--;
+            if( liste_vide(l_monstre) ){
+              salle->etat = VIDE;
+            }
           }
           suivant(l_monstre);
         }

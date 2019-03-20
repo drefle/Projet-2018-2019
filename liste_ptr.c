@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "liste_ptr.h"
+#include "tout.h"
 
 
 void init_liste(t_liste * liste, void (*copier_elem)(void *, void *), void (*supprimer_elem)(void *)){

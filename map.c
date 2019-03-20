@@ -4,12 +4,11 @@
 #include <time.h>
 #include <ncurses.h>
 
-#include "map.h"
+#include "tout.h"
 
-#define N 48
+#define N 46
 #define M 26
 #define L 12
-
 
 
 extern
@@ -22,6 +21,7 @@ void init_map(t_salle * m_map[L][L]){
 	}
   m_map[L/2][L/2] = creer_salle();
 }
+
 
 extern
 int coord_valides(t_salle * m_map[L][L], int x, int y){
@@ -57,6 +57,7 @@ int coord_valides(t_salle * m_map[L][L], int x, int y){
 		return 1;
 }
 
+
 extern
 void maj_coord_possible(t_salle * m_map[L][L], t_liste * l_coord , int x , int y){
 
@@ -80,6 +81,7 @@ void maj_coord_possible(t_salle * m_map[L][L], t_liste * l_coord , int x , int y
 	}
 
 }
+
 
 extern
 void genmap(t_salle * m_map[L][L], int n){
@@ -121,5 +123,61 @@ void genmap(t_salle * m_map[L][L], int n){
 				init_salle(m_map, i, j);
 			}
 		}
+	}
+}
+
+
+extern
+void maj_map(t_salle * m_map[L][L], int x, int y){
+  if( (m_map[x+1][y] != NULL) && (m_map[x+1][y]->etat == CACHE) ){
+    m_map[x+1][y]->etat = VU;
+  }
+  if( (m_map[x-1][y] != NULL) && (m_map[x-1][y]->etat == CACHE) ){
+    m_map[x-1][y]->etat = VU;
+  }
+  if( (m_map[x][y+1] != NULL) && (m_map[x][y+1]->etat == CACHE) ){
+    m_map[x][y+1]->etat = VU;
+  }
+  if( (m_map[x][y-1] != NULL) && (m_map[x][y-1]->etat == CACHE) ){
+    m_map[x][y-1]->etat = VU;
+  }
+}
+
+
+extern
+void afficher_map(t_salle * m_map[L][L], t_joueur * joueur){
+	int i, j, color;
+
+	for(int i=0; i<L ;i++){
+		for(int j=0 ; j<L ;j++){
+			if( (m_map[i][j]) && (m_map[i][j]->etat != CACHE) ){
+        if(m_map[i][j]->etat == VU){
+          color = 5;
+        }else{
+          color = 2;
+        }
+        attron(COLOR_PAIR(color));
+        printw("[");
+        attroff(COLOR_PAIR(color));
+				if( (i==joueur->x_map) && (j==joueur->y_map) ){
+
+					attron(A_BOLD);
+	        attron(COLOR_PAIR(1));
+	        printw("0");
+	        attroff(A_BOLD);
+	        attroff(COLOR_PAIR(1));
+				}
+				else{
+					printw(" ");
+				}
+        attron(COLOR_PAIR(color));
+        printw("]");
+        attroff(COLOR_PAIR(color));
+			}
+			else{
+				printw("   ");
+			}
+		}
+		printw("\n");
 	}
 }
