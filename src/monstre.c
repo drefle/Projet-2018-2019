@@ -38,7 +38,7 @@ void supprimer_monstre_cb(void * a){
 }
 
 extern
-void deplacer_monstre(t_salle * salle, t_joueur * j, int i){ // Déplace et verifie si un projectile touche qqchose
+void deplacer_monstre(t_salle * salle, t_joueur * j, int i){ /*Déplace et verifie si un projectile touche qqchose*/
   t_liste * l_monstre = salle->l_monstre;
   t_monstre * m;
 
@@ -57,7 +57,7 @@ void deplacer_monstre(t_salle * salle, t_joueur * j, int i){ // Déplace et veri
     if(i % m->vitesse == 0){
       if( dist_monstre == 2){
         j->pv--;
-      }else if( m->last_dir == V ){//Permet de les faire se déplacer en diagonale plutot qu'en 2 grandes lignes droites
+      }else if( m->last_dir == V ){/*Permet de les faire se déplacer en diagonale plutot qu'en 2 grandes lignes droites*/
 
         if( mat_distance[m->x_salle][m->y_salle+1] == dist_monstre-1 && salle->m_salle[m->x_salle][m->y_salle+1] == 0 ){
           m->y_salle++;

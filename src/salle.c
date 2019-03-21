@@ -32,7 +32,7 @@ void init_pattern(int m_pattern[4][NB_PATTERN][M][N]){
 }
 
 
-static
+extern
 void remplir_pattern(int m_pattern[4][NB_PATTERN][M][N]){
   FILE* fichier;
   int coin = 0;
@@ -66,12 +66,10 @@ void remplir_pattern(int m_pattern[4][NB_PATTERN][M][N]){
 
 
 extern
-void init_salle(t_salle * m_map[L][L], int x, int y){
+void init_salle(t_salle * m_map[L][L], int x, int y, int m_pattern[4][NB_PATTERN][M][N]){
   int i, j, k;
   int x_mob, y_mob, nb_mob ;
   int choix_HG, choix_HD, choix_BG, choix_BD ;
-  int m_pattern[4][NB_PATTERN][M][N];
-
 
   for( i=0 ; i<M ; i++){
       for( j=0 ; j<N ; j++){

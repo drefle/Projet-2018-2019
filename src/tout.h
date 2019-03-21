@@ -37,7 +37,7 @@ typedef struct s_element t_element;
 typedef struct s_liste t_liste;
 
 
-//######################COORD######################
+/*######################COORD######################*/
 
 struct s_coord{
   int absi;
@@ -54,7 +54,7 @@ void copier_coord_cb(void * a, void * b);
 extern
 void supprimer_coord_cb(void * a);
 
-//###################### LISTE PTR ######################
+/*###################### LISTE PTR ######################*/
 
 struct s_element{
   void * p_val;
@@ -105,7 +105,7 @@ void ajout_droit(t_liste * liste, void * pt);
 extern
 void ajout_gauche(t_liste * liste, void * pt);
 
-//##################SALLE##########################
+/*##################SALLE##########################*/
 
 /**
 * \file salle.h
@@ -139,7 +139,7 @@ static
 void remplir_pattern(int m_pattern[4][NB_PATTERN][M][N]);
 */
 extern
-void init_salle(t_salle * m_map[L][L], int x, int y);
+void init_salle(t_salle * m_map[L][L], int x, int y, int m_pattern[4][NB_PATTERN][M][N]);
 
 extern
 void afficher_salle(int mat[M][N]);
@@ -152,7 +152,7 @@ void afficher_mat_distance(int mat_distance[M][N]); /*wesh*/
 
 
 
-//################### MAP #########################
+/*################### MAP #########################*/
 
 
 extern
@@ -168,6 +168,9 @@ extern
 void init_map(t_salle * m_map[L][L]);
 
 extern
+void remplir_pattern(int m_pattern[4][NB_PATTERN][M][N]);
+
+extern
 void afficher_map(t_salle * m_map[L][L], t_joueur * joueur);
 
 extern
@@ -177,14 +180,14 @@ extern
 void maj_coord_possible(t_salle * m_map[L][L], t_liste * l_coord , int x , int y);
 
 extern
-void genmap(t_salle * m_map[L][L], int n);
+void genmap(t_salle * m_map[L][L], int n, int m_pattern[4][NB_PATTERN][M][N]);
 
 extern
 void maj_map(t_salle * m_map[L][L], int x, int y);
 
 
 
-//########################## JOUEUR ##############################
+/*########################## JOUEUR ##############################*/
 
 
 /**
@@ -244,7 +247,7 @@ void controle_joueur(t_joueur * joueur, t_salle * m_map[L][L]);
 
 
 
-//################### MONSTRE #########################
+/*################### MONSTRE #########################*/
 
 typedef enum {H, V} t_dir;
 struct s_monstre{

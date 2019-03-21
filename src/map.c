@@ -73,7 +73,7 @@ void maj_coord_possible(t_salle * m_map[L][L], t_liste * l_coord , int x , int y
 
 
 extern
-void genmap(t_salle * m_map[L][L], int n){
+void genmap(t_salle * m_map[L][L], int n, int m_pattern[4][NB_PATTERN][M][N]){
 	int i, j;
 	t_liste * l_coord = malloc(sizeof(t_liste));
 	t_coord * coord = creer_coord(-1,-1);
@@ -108,7 +108,7 @@ void genmap(t_salle * m_map[L][L], int n){
 		for( j=0 ; j<L ; j++){
 			if( m_map[i][j] != NULL ){
 
-				init_salle(m_map, i, j);
+				init_salle(m_map, i, j, m_pattern);
 			}
 		}
 	}

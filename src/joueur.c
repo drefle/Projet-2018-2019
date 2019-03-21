@@ -76,13 +76,11 @@ void controle_joueur(t_joueur * joueur, t_salle * m_map[L][L]){
     break;
     case 'd': joueur->y_direction = joueur->y_mouv = 1; joueur->x_direction = joueur->x_mouv = 0; flushinp();
     break;
-    case ' ': if( (m_map[joueur->x_map][joueur->y_map]->m_salle[ joueur->x_salle + joueur->x_direction][ joueur->y_salle + joueur->y_direction] != MUR) && (m_map[joueur->x_map][joueur->y_map]->m_salle[ joueur->x_salle + joueur->x_direction][ joueur->y_salle + joueur->y_direction] != PORTE ) ){ // Vérifie que le projectile n'est pas créé dans un mur ou une porte.
-                tirer_projectile(m_map[joueur->x_map][joueur->y_map], joueur->x_salle, joueur->y_salle, joueur->x_direction, joueur->y_direction, 1); flushinp();
-              }
+    case ' ': tirer_projectile( m_map[joueur->x_map][joueur->y_map], joueur->x_salle, joueur->y_salle, joueur->x_direction, joueur->y_direction, 1 ); flushinp();
     break;
-    default: joueur->x_mouv = 0; joueur->y_mouv = 0;flushinp();
+    default: joueur->x_mouv = 0; joueur->y_mouv = 0; flushinp();
     break;
   }
 
-  deplacer_joueur(m_map, joueur);
+  deplacer_joueur( m_map, joueur );
 }

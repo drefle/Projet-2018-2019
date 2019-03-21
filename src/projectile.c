@@ -29,7 +29,7 @@ void copier_projectile_cb(void * a, void * b){
 
 
 extern
-t_projectile * creer_projectile(int x, int y, int mouv_x, int mouv_y, int vit){ // Creation d'un projectile.
+t_projectile * creer_projectile(int x, int y, int mouv_x, int mouv_y, int vit){ /*Creation d'un projectile*/
     t_projectile * p = malloc(sizeof(t_projectile));
     p->x = x + mouv_x;
     p->y = y + mouv_y;
@@ -48,7 +48,7 @@ void supprimer_monstre_coord(t_salle * salle, int x, int y){
 
   en_tete(l_monstre);
   t_monstre * m;
-  while(!hors_liste(l_monstre)){ //Vérifie quel monstre a été touché
+  while(!hors_liste(l_monstre)){ /*Vérifie quel monstre a été touché*/
     m = l_monstre->ec->p_val;
 
     if(x == m->x_salle && y == m->y_salle){
@@ -84,7 +84,7 @@ void tirer_projectile(t_salle * salle, int x, int y, int mouv_x, int mouv_y, int
 
 
 extern
-void deplacer_projectile(t_salle * salle, t_joueur * j,int i){ // Déplace et verifie si un projectile touche qqchose
+void deplacer_projectile(t_salle * salle, t_joueur * j,int i){ /*Déplace et verifie si un projectile touche qqchose*/
   t_liste * l_projectile = salle->l_projectile;
   t_projectile * p;
 
@@ -98,11 +98,11 @@ void deplacer_projectile(t_salle * salle, t_joueur * j,int i){ // Déplace et ve
       p->y += p->mouv_y;
     }
 
-    if( salle->m_salle[p->x][p->y] !=0 ){ // Vérifie si le projectile touche qqchose
-      if( salle->m_salle[p->x][p->y] == JOUEUR){ // Joueur touché
+    if( salle->m_salle[p->x][p->y] !=0 ){ /*Vérifie si le projectile touche qqchose*/
+      if( salle->m_salle[p->x][p->y] == JOUEUR){ /*Joueur touché*/
         j->pv--;
       }
-      else if( salle->m_salle[p->x][p->y] == MONSTRE){ // Un Monstre touché
+      else if( salle->m_salle[p->x][p->y] == MONSTRE){ /*Un Monstre touché*/
         supprimer_monstre_coord(salle, p->x, p->y);
       }
       oter_elt(l_projectile);
