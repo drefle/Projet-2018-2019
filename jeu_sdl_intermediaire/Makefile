@@ -11,9 +11,8 @@ PROG=jeu
 
 all:jeu
 
-
 jeu : jeu.o joueur.o map.o salle.o coordonnees.o liste_ptr.o projectile.o monstre.o fonc_sdl.o
-		${CC} jeu.o joueur.o map.o salle.o coordonnees.o liste_ptr.o monstre.o projectile.o fonc_sdl.o -o jeu -lncurses ${LIBS} ${INCLUDES}
+	${CC} jeu.o joueur.o map.o salle.o coordonnees.o liste_ptr.o monstre.o projectile.o fonc_sdl.o -o jeu -lncurses ${LIBS} ${INCLUDES}
 
 joueur.o : joueur.c tout.h
 	${CC} -c joueur.c -o joueur.o -lncurses ${LIBS} ${INCLUDES}

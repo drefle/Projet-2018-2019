@@ -1,8 +1,29 @@
-#include "tout.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_image.h>
 
-extern int nb_mob_tot;
 
-int main(){
+SDL_Texture* tex_img_png(char * s, SDL_Renderer* renderer){
+
+    SDL_RWops *rwop=SDL_RWFromFile(s, "rb");
+	SDL_Surface *image=IMG_LoadPNG_RW(rwop);
+	if(!image) {
+	     printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
+	}
+	SDL_Texture *image_btn_tex = SDL_CreateTextureFromSurface(renderer, image); 
+	if(!image_btn_tex){
+		fprintf(stderr, "Erreur à la création du rendu de l'image : %s\n", SDL_GetError());
+		exit(EXIT_FAILURE);
+	}
+	SDL_FreeSurface(image); /* on a la texture, plus besoin de l'image */
+    return image_btn_tex;
+}
+
+int main(int argc, char** argv)
+{
 	int x,y,i;
 	int pos = 1;
     //Le pointeur vers la fenetre
@@ -185,8 +206,7 @@ int main(){
 						case SDLK_RETURN:
 							switch(pos){
 								case 1:
-									SDL_DestroyWindow(pWindow);
-									jeu();
+								/*lancement du jeu*/
 								break;
 								case 2:
 								/*credit*/
@@ -263,107 +283,4 @@ int main(){
     return 0;
 }
 
-int jeu(){
-	int running =1;
-	SDL_Window* pWindow = NULL;
-	SDL_Renderer *salle_render=NULL;
-	SDL_Keycode touche;
-	t_res *ressource = malloc(sizeof(t_res));
 
-	int i = 0, j;
-	t_salle * m_map[L][L];
-	int m_pattern[4][NB_PATTERN][M][N];
-	t_joueur * joueur = creer_joueur(L/2, L/2, M/2, N/2, 6);
-	srand(time(NULL));
-	pWindow = SDL_CreateWindow("The Biding of Isaac REMASTERED",SDL_WINDOWPOS_UNDEFINED,
-																SDL_WINDOWPOS_UNDEFINED,
-												 				1728,
-												  				972,
-												  				SDL_WINDOW_SHOWN|SDL_WINDOW_RESIZABLE);
-
-	salle_render = SDL_CreateRenderer(pWindow, -1, SDL_RENDERER_ACCELERATED);
-	if(salle_render == NULL){
-			fprintf(stderr, "Erreur à la création du renderer\n");
-			exit(EXIT_FAILURE);
-	}
-	initscr();
-	keypad(stdscr, TRUE);
-	cbreak();
-	noecho();
-	nodelay(stdscr, TRUE);
-	start_color();
-	init_pair(1, COLOR_RED, COLOR_BLACK);
-	init_pair(2, COLOR_GREEN, COLOR_BLACK);
-	init_pair(3, COLOR_BLUE, COLOR_BLACK);
-	init_pair(4, COLOR_YELLOW, COLOR_BLACK);
-	init_pair(5, COLOR_WHITE, COLOR_BLACK);
-
-
-  init_map( m_map );/*Création de la map*/
-
-	remplir_pattern( m_pattern );/*Lecture du fichier qui contient les différents pattern*/
-
-	genmap(m_map, NB_SALLE, m_pattern);/*Remplissage de la map*/
-
-	for( j=3 ; j>0 ; j-- ){/*Compte à rebours*/
-		clear();
-		printw("---------- %i ----------\n", j );
-		refresh();
-		sleep(1);
-	}
-if(pWindow){
-	/*fprintf(stderr,"ok fenetre\n");*/
- init_res(ressource,salle_render);
-			while(( ( joueur->pv > 0 ) && ( nb_mob_tot > 0 )) && running ){
-				SDL_Event e;
-				deplacer_projectile( m_map[joueur->x_map][joueur->y_map], joueur, i );
-				deplacer_monstre( m_map[joueur->x_map][joueur->y_map], joueur , i );
-
-				/*Affichage de la salle et de la map*/
-				afficher_salle( m_map[joueur->x_map][joueur->y_map]->m_salle,salle_render,ressource );
-
-				afficher_map( m_map, joueur );
-				fprintf(stderr,"ok afficher map");
-				/*Affichage des vies*/
-				for( j=0  ; j<joueur->pv ; j++ ){
-					printw("<3 ");
-				}
-				printw("\n");
-
-				/*Affichage du nbre de monstres restant*/
-				printw("NB MOB : %i\n", nb_mob_tot);
-
-				/*Affichage du nomnre de projectiles dans la salle*/
-				printw("NB PROJ = %i\n", m_map[joueur->x_map][joueur->y_map]->l_projectile->nb_elem);
-
-				fprintf(stderr,"ok fin windowevent");
-				i = (i + 1) % 50000;
-				refresh();
-				usleep( (1.0/TICK) * 1000000 );
-				clear();
-				/*fprintf(stderr,"ok condition jeu\n");*/
-				while(SDL_PollEvent(&e)) {
-				/*	fprintf(stderr,"ok pollevent\n");*/
-					touche = e.key.keysym.sym;
-					if(touche == SDLK_ESCAPE){
-						running =0;
-					}
-					controle_joueur(joueur, m_map,touche);
-
-			}
-		}
-	}
-	SDL_DestroyWindow(pWindow);
-	if( joueur->pv > 0 ){
-		printw("OMG WHAT A PROPLAYER\n");
-		refresh();
-	}
-	else{
-		printw("LOOOOOOOSER\n");
-		refresh();
-	}
-/* Doit être avant TTF_Quit() */
-	TTF_Quit();
-		SDL_Quit();
-return 0;
-}

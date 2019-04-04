@@ -1,4 +1,3 @@
-
 #include "tout.h"
 
 extern
@@ -15,7 +14,12 @@ SDL_Texture* tex_img_png(char * s, SDL_Renderer *renderer){
 		exit(EXIT_FAILURE);
 	}
 	SDL_FreeSurface(image); /* on a la texture, plus besoin de l'image */
+  if(image_btn_tex!= NULL){
     return image_btn_tex;
+  }
+  else{
+    return 0;
+  }
 }
 
 extern

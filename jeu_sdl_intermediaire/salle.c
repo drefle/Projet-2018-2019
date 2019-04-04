@@ -157,17 +157,17 @@ extern
 void afficher_salle(int mat[M][N],SDL_Renderer *salle_render,t_res *ressource){
   int i, j;
   fprintf(stderr,"ok entrer salle");
-  init_res(ressource,salle_render);
+
   fprintf(stderr,"ok init res passer");
   SDL_Rect salle;
   SDL_Texture *temp;
-  salle.w=M*10;
-  salle.h=N*10;
+  salle.w=M*30;
+  salle.h=N*30;
   SDL_RenderClear(salle_render);
   SDL_QueryTexture(ressource->case_vide_tex, NULL, NULL, &(salle.w), &(salle.h));
 
   for( i=0 ; i<M ; i++){
-    salle.y = i*10;
+    salle.y = i*30;
     salle.x =0;
     for( j=0 ; j<N ; j++){
       if(mat[i][j] == JOUEUR){
@@ -189,7 +189,7 @@ void afficher_salle(int mat[M][N],SDL_Renderer *salle_render,t_res *ressource){
         temp = ressource->case_vide_tex;
       }
       SDL_RenderCopy(salle_render,temp,NULL,&salle);
-      salle.x += 10;
+      salle.x += 30;
     }
   }
 
