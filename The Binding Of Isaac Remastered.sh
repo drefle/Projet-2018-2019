@@ -7,3 +7,4 @@ make
 ./jeu
 make clean
 exit 0
+ 
